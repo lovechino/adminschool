@@ -3,3 +3,5 @@ function PageContent(){
         <div>PageContent</div>
     )
 }
+
+export default PageContent
