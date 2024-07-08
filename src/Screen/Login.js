@@ -1,9 +1,12 @@
 import { Button, Form, Input, Typography } from "antd"
 import "../css/Login.css"
+import { Link, Navigate } from "react-router-dom"
 
 const Login = ()=>{
     const log = (data)=>{
         console.log({username : data.username , password : data.password})
+        window.localStorage.setItem("loggedIn",true)
+        
     }
     return(
         <div className="appBg">
@@ -33,6 +36,7 @@ const Login = ()=>{
                     
                 </Form.Item>
                 <Button type="primary" htmlType="submit" block>Login</Button>
+                <Link to= "/user">aaaaa</Link>
             </Form>
         </div>
     )
