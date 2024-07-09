@@ -1,12 +1,22 @@
 import { Button, Form, Input, Typography } from "antd"
 import "../css/Login.css"
-import { Link, Navigate } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { LogIn } from "../API/Log"
 
 const Login = ()=>{
-    const log = (data)=>{
-        console.log({username : data.username , password : data.password})
-        window.localStorage.setItem("loggedIn",true)
-        
+    const [username,setUsername] = useState("")
+    const [password,setPassword] = useState("")
+    const navigate = useNavigate()
+    const log = async (data)=>{
+       const a = await LogIn({username : data.username,password : data.password})
+       if(a?.TOKEN){
+        console.log("nice")
+        localStorage.setItem("TOKEN",a.TOKEN)
+        navigate("/user")
+       }else{
+        console.log("aaaa")
+       }
     }
     return(
         <div className="appBg">
@@ -21,7 +31,7 @@ const Login = ()=>{
                 ]}
                 label = 'Username'
                  name = {'username'}>
-                    <Input placeholder="username"/>
+                    <Input placeholder="username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
                 </Form.Item>
                 <Form.Item 
                 rules={
@@ -32,11 +42,11 @@ const Login = ()=>{
                 }
                 label = 'Password'
                  name = {'password'}>
-                    <Input.Password placeholder="password"/>
+                    <Input.Password placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                     
                 </Form.Item>
                 <Button type="primary" htmlType="submit" block>Login</Button>
-                <Link to= "/user">aaaaa</Link>
+                {/* <Link onClick={()=>log()}>aaaaa</Link> */}
             </Form>
         </div>
     )
